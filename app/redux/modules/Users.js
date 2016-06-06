@@ -1,3 +1,5 @@
+import auth from 'helpers/auth'
+
 const AUTH_USER = 'AUTH_USER',
       UNAUTH_USER = 'UNAUTH_USER',
       FETCHING_USER = 'FETCHING_USER',
@@ -5,11 +7,11 @@ const AUTH_USER = 'AUTH_USER',
       FETCHING_USER_FAILURE = 'FETCHING_USER_FAILURE'
 
 // User action creators
-export function authUser(uid) {
+function authUser(uid) {
     return {
-    type: AUTH_USER,
-    uid,
-  }
+      type: AUTH_USER,
+      uid,
+    }
 }
 
 export function unAuthUser() {
@@ -17,24 +19,37 @@ export function unAuthUser() {
     type: UNAUTH_USER,
   }
 }
-export function fetchingUser() {
+
+function fetchingUser() {
   return {
     type: FETCHING_USER,
   }
 }
-export function fetchingUserFailure() {
+function fetchingUserFailure() {
   return {
     type: FETCHING_USER_FAILURE,
     error: 'Error fetching user.',
   }
 }
 
-export function fetchingUserSuccess(uid, user, timestamp) {
+function fetchingUserSuccess(uid, user, timestamp) {
   return {
     type: FETCHING_USER_SUCCESS,
     uid,
     user,
     timestamp,
+  }
+}
+
+export function fetchAndHandleAuthedUser() {
+  return function (dispatch){
+    dispatch(fetchingUser())
+    auth()
+    .then( (user) => {
+      dispatch(fetchingUserSuccess(user.uid, user, Date.now()))
+      dispatch(authUser(user.uid))
+    })
+    .catch( (err) => dispatch(fetchingUserFailure()))
   }
 }
 
