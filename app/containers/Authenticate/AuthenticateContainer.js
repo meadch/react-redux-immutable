@@ -3,6 +3,7 @@ import { Authenticate } from 'components'
 import { connect } from 'react-redux'
 import * as userActionCreators from 'redux/modules/users'
 import { bindActionCreators } from 'redux'
+import { hashHistory } from 'react-router'
 
 const AuthenticateContainer = React.createClass({
   propTypes: {
@@ -10,8 +11,14 @@ const AuthenticateContainer = React.createClass({
     error: PropTypes.string.isRequired,
     fetchAndHandleAuthedUser: PropTypes.func.isRequired,
   },
+  contextTypes: {
+    router: PropTypes.object.isRequired,
+  },
   handleAuth () {
     this.props.fetchAndHandleAuthedUser()
+    .then( () => {
+      this.context.router.replace('feed')
+    })
   },
   render () {
     return (
@@ -23,10 +30,10 @@ const AuthenticateContainer = React.createClass({
   },
 })
 
-function mapStateToProps(state){
+function mapStateToProps({users}){
   return {
-    isFetching: state.isFetching,
-    error: state.error,
+    isFetching: users.isFetching,
+    error: users.error,
   }
 }
 
