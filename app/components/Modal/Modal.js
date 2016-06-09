@@ -27,12 +27,15 @@ Modal.propTypes = {
   updateDuckText: func.isRequired,
 }
 
-
-const Modal = (props) => {
-  console.log(props)
+function Modal(props){
+  function handleSubmitDuckBtn(){
+    console.log('Duck', props.duckText)
+    console.log('User', props.user)
+  }
   return (
     <span className={darkBtn} onClick={props.openModal}>
-      <ReactModal style={modalStyles} isOpen={props.duckText}>
+      {'Add Algo'}
+      <ReactModal style={modalStyles} isOpen={props.isOpen} onRequestClose={props.closeModal}>
         <div className={newDuckTop}>
           <span>{'Add new duck...'}</span>
           <span onClick={props.closeModal} className={pointer}>{'X'}</span>
@@ -47,13 +50,16 @@ const Modal = (props) => {
             placeholder={"What's on your mind?"}
             />
         </div>
-
+        <button
+          className={submitDuckBtn}
+          disabled={props.isSubmitDisabled}
+          onClick={handleSubmitDuckBtn}
+          >
+          Hello
+        </button>
       </ReactModal>
     </span>
   )
-  props.isOpen ?
-          <div>Display Modal: {props.duckText}</div> :
-          <div>Modal aint open fool.</div>
 }
 
 export default Modal
