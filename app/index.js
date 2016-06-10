@@ -14,7 +14,6 @@ const store = createStore( combineReducers(reducers),
                                 )
                               )
 
-
 function checkAuth(nextState, replace){
   const isAuthed = checkIfAuthed(store),
         nextPathName = nextState.location.pathname

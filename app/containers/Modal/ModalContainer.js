@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import {Modal} from 'components'
 import { connect } from 'react-redux'
-import * as userActionCreators from 'redux/modules/users'
+import * as ducksActionCreators from 'redux/modules/ducks'
 import * as modalActionCreators from 'redux/modules/modal'
 import { bindActionCreators } from 'redux'
 
@@ -16,7 +16,7 @@ function mapStateToProps({modal, users}){
 }
 
 function mapDispatchtoProps(dispatch){
-  const actionCreators = Object.assign({}, userActionCreators, modalActionCreators)
+  const actionCreators = {...ducksActionCreators, ...modalActionCreators, dispatch}
   return bindActionCreators( actionCreators, dispatch )
 }
 

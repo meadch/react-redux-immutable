@@ -3,7 +3,7 @@ import { default as ReactModal } from 'react-modal'
 import {
   newDuckTop, pointer, newDuckInputContainer,
   newDuckInput, submitDuckBtn, darkBtn } from './styles.css'
-
+import {formatNewDuck} from 'helpers/utils'
 const modalStyles = {
   content: {
     width: 350,
@@ -22,15 +22,13 @@ Modal.propTypes = {
   isOpen: bool.isRequired,
   isSubmitDisabled: bool.isRequired,
   user: object.isRequired,
-  openModal: func.isRequired,
-  closeModal: func.isRequired,
-  updateDuckText: func.isRequired,
+  handleDuckStuff: func.isRequired,
 }
 
 function Modal(props){
+  console.log("MODAL PROPS: ", props)
   function handleSubmitDuckBtn(){
-    console.log('Duck', props.duckText)
-    console.log('User', props.user)
+    props.handleDuckStuff(formatNewDuck(props.duckText, props.user))
   }
   return (
     <span className={darkBtn} onClick={props.openModal}>
