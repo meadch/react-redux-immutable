@@ -25,6 +25,7 @@ const FeedContainer = React.createClass({
         error={this.props.error}
         isFetching={this.props.isFetching}
         resetNewDucksAvailable={this.props.resetNewDucksAvailable}
+        duckIds={this.props.duckIds}
         />
     );
   }
@@ -32,11 +33,12 @@ const FeedContainer = React.createClass({
 });
 
 function mapStateToProps({feed}){
-  const { newDucksAvailable, error, isFetching } = feed
+  const { newDucksAvailable, error, isFetching, duckIds } = feed
   return {
     newDucksAvailable,
     error,
     isFetching,
+    duckIds,
   }
 }
 

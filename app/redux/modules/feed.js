@@ -52,7 +52,7 @@ export function setAndHandleFeedListener(){
     dispatch(addListener('feed'))
     dispatch(settingFeedListener())
 
-    listenToFeed( (feed, sortedIds) => {
+    listenToFeed( ({feed, sortedIds}) => {
         dispatch(addMultipleDucks(feed))
         initialFetch === true
         ? dispatch(settingFeedListenerSuccess(sortedIds))

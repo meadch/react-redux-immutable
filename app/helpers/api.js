@@ -30,7 +30,6 @@ export function saveDuck (duck) {
 }
 
 export function listenToFeed (cb, errorCB) {
-  console.log("listenToFeed running...")
   // Setting up listener...
   ref.child('ducks').on('value', (snapshot) => {
     const feed = snapshot.val() || {}

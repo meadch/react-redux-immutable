@@ -26,7 +26,6 @@ Modal.propTypes = {
 }
 
 function Modal(props){
-  console.log("MODAL PROPS: ", props)
   function handleSubmitDuckBtn(){
     props.handleDuckStuff(formatNewDuck(props.duckText, props.user))
   }
