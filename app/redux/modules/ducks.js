@@ -1,4 +1,4 @@
-import { saveDuck } from 'helpers/api'
+import { saveDuck, fetchDuck } from 'helpers/api'
 import { closeModal } from './modal'
 import { addSingleUsersDuck } from './usersDucks'
 
@@ -30,7 +30,7 @@ function fetchingDuckSuccess (duck) {
   }
 }
 
-function removeFetching () {
+export function removeFetching () {
   return {
     type: REMOVE_FETCHING,
   }
@@ -62,6 +62,15 @@ export function handleDuckStuff (duck, getState) {
     .catch( (err) => {
       console.warn("Error in handleDuckStuff:", err)
     })
+  }
+}
+
+export function fetchAndHandleDuck(duckId){
+  return function(dispatch){
+    dispatch(fetchingDuck())
+    fetchDuck(duckId)
+    .then( (duck) => dispatch(fetchingDuckSuccess(duck)))
+    .catch( (err) => dispatch(fetchingDuckError(err)))
   }
 }
 
