@@ -44,7 +44,6 @@ function addDuck (duck) {
 }
 
 export function addMultipleDucks (ducks) {
-  console.log('addMultipleDucks', ducks)
   return {
     type: ADD_MULTIPLE_DUCKS,
     ducks,
@@ -52,7 +51,6 @@ export function addMultipleDucks (ducks) {
 }
 
 export function handleDuckStuff (duck, getState) {
-
   return function(dispatch, getState){
     const uid = getState().users.authedId
     saveDuck(duck)

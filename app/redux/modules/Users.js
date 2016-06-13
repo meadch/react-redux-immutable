@@ -46,10 +46,12 @@ export function fetchingUserSuccess (uid, user, timestamp) {
 
 export function fetchAndHandleAuthedUser () {
   return function (dispatch) {
+    console.log("dispatching fetchingUser")
     dispatch(fetchingUser())
     return auth()
       .then(({uid, facebook}) => {
         const userInfo = formatUserInfo(facebook.displayName, facebook.profileImageURL, uid)
+        console.log("dispatching fetchingUserSuccess")
         return dispatch(fetchingUserSuccess(uid, userInfo, Date.now()))
       })
       .then(({user}) => saveUser(user))

@@ -28,7 +28,6 @@ const UserContainer = React.createClass({
     }
   },
   render(){
-    console.log("NAME", this.props.name)
     return <User
         noUser={this.props.noUser}
         name={this.props.noUser ? '' : this.props.name}
