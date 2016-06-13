@@ -1,40 +1,41 @@
 import auth, { logout, saveUser } from 'helpers/auth'
-import {formatUserInfo} from 'helpers/utils'
+import { formatUserInfo } from 'helpers/utils'
 import { fetchUser } from 'helpers/api'
 
-const AUTH_USER = 'AUTH_USER',
-      UNAUTH_USER = 'UNAUTH_USER',
-      FETCHING_USER = 'FETCHING_USER',
-      FETCHING_USER_SUCCESS = 'FETCHING_USER_SUCCESS',
-      FETCHING_USER_FAILURE = 'FETCHING_USER_FAILURE'
+const AUTH_USER = 'AUTH_USER'
+const UNAUTH_USER = 'UNAUTH_USER'
+const FETCHING_USER = 'FETCHING_USER'
+const FETCHING_USER_FAILURE = 'FETCHING_USER_FAILURE'
+const FETCHING_USER_SUCCESS = 'FETCHING_USER_SUCCESS'
 
-// User action creators
-export function authUser(uid) {
-    return {
-      type: AUTH_USER,
-      uid,
-    }
+export function authUser (uid) {
+  return {
+    type: AUTH_USER,
+    uid,
+  }
 }
 
-export function unAuthUser() {
+function unauthUser () {
   return {
     type: UNAUTH_USER,
   }
 }
 
-function fetchingUser() {
+function fetchingUser () {
   return {
     type: FETCHING_USER,
   }
 }
-function fetchingUserFailure() {
+
+function fetchingUserFailure (error) {
+  console.warn(error)
   return {
     type: FETCHING_USER_FAILURE,
     error: 'Error fetching user.',
   }
 }
 
-export function fetchingUserSuccess(uid, user, timestamp) {
+export function fetchingUserSuccess (uid, user, timestamp) {
   return {
     type: FETCHING_USER_SUCCESS,
     uid,
@@ -43,47 +44,37 @@ export function fetchingUserSuccess(uid, user, timestamp) {
   }
 }
 
-export function fetchAndHandleAuthedUser() {
-  return function (dispatch){
+export function fetchAndHandleAuthedUser () {
+  return function (dispatch) {
     dispatch(fetchingUser())
     return auth()
-    .then( ({facebook, uid}) => {
-      const userInfo = formatUserInfo(facebook.displayName, facebook.profileImageURL, uid)
-      return dispatch(fetchingUserSuccess(uid, userInfo, Date.now()))
-    })
-    .then( ({user}) => saveUser(user))
-    .then( (user) => dispatch(authUser(user.uid)))
-    .catch( (err) => dispatch(fetchingUserFailure()))
+      .then(({uid, facebook}) => {
+        const userInfo = formatUserInfo(facebook.displayName, facebook.profileImageURL, uid)
+        return dispatch(fetchingUserSuccess(uid, userInfo, Date.now()))
+      })
+      .then(({user}) => saveUser(user))
+      .then((user) => dispatch(authUser(user.uid)))
+      .catch((error) => dispatch(fetchingUserFailure(error)))
   }
 }
 
-export function fetchAndHandleUser(uid){
-  return function(dispatch){
-    dispatch(fetchingUser())
-    return fetchUser(uid)
-      .then( (user) => dispatch(fetchingUserSuccess(uid, user, Date.now())))
-      .catch( (err) => dispatch(fetchingUserFailure(err)))
-  }
-}
-
-// export function fetchAndHandleUser (uid) {
-//   return function (dispatch) {
-//     dispatch(fetchingUser())
-//
-//     return fetchUser(uid)
-//       .then((user) => dispatch(fetchingUserSuccess(uid, user, Date.now())))
-//       .catch((error) => dispatch(fetchingUserFailure(error)))
-//   }
-// }
-
-export function logoutAndUnauth(){
-  return function(dispatch){
+export function logoutAndUnauth () {
+  return function (dispatch) {
     logout()
-    dispatch(unAuthUser())
+    dispatch(unauthUser())
   }
 }
 
-// User reducers
+export function fetchAndHandleUser (uid) {
+  return function (dispatch) {
+    dispatch(fetchingUser())
+
+    return fetchUser(uid)
+      .then((user) => dispatch(fetchingUserSuccess(uid, user, Date.now())))
+      .catch((error) => dispatch(fetchingUserFailure(error)))
+  }
+}
+
 const initialUserState = {
   lastUpdated: 0,
   info: {
