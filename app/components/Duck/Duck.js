@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
-import {formatTimeStamp} from 'helpers/utils'
+import {formatTimestamp} from 'helpers/utils'
 import Reply from 'react-icons/lib/fa/mail-reply'
 import Star from 'react-icons/lib/fa/star'
+
 
 import {
   duckContainer, contentContainer, avatar, actionContainer,
@@ -40,7 +41,7 @@ export default function Duck (props) {
         <div className={contentContainer}>
           <div className={header}>
             <div onClick={props.goToProfile} className={author}>{props.duck.name}</div>
-            <div>{formatTimeStamp(props.duck.timestamp)}</div>
+            <div>{formatTimestamp(props.duck.timestamp)}</div>
           </div>
           <div className={text}>{props.duck.text}</div>
           <div className={likeReplyContainer}>

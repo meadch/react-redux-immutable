@@ -26,7 +26,7 @@ const DuckContainer = React.createClass({
     }
   },
   goToProfile(e){
-    e.preventDefault()
+    e.stopPropagation()
     this.context.router.push(`/${this.props.duck.uid}`)
   },
   handleClick(e){

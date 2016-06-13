@@ -1,6 +1,6 @@
 import { ref } from 'config/constants'
 import { formatUserInfo } from 'helpers/utils'
-import {fetchingUserSuccess, authUser } from 'redux/modules/users'
+import { fetchingUserSuccess, authUser } from 'redux/modules/users'
 
 export default function auth (){
   return ref.authWithOAuthPopup('facebook')
@@ -8,7 +8,6 @@ export default function auth (){
 
 export function checkIfAuthed(store){
   const authData = ref.getAuth()
-  console.log(authData)
   if (authData === null){
     return false;
   } else if (store.getState().users.isAuthed === false) {

@@ -44,6 +44,7 @@ function addDuck (duck) {
 }
 
 export function addMultipleDucks (ducks) {
+  console.log('addMultipleDucks', ducks)
   return {
     type: ADD_MULTIPLE_DUCKS,
     ducks,
