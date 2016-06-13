@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {Duck} from 'components'
-// import * as feedActionCreators from 'redux/modules/feed'
-// import {bindActionCreators} from 'redux'
+import * as usersLikesActions from 'redux/modules/usersLikes'
+import {bindActionCreators} from 'redux'
 
 
 const { string, object, bool, number, func } = PropTypes
@@ -25,11 +25,11 @@ const DuckContainer = React.createClass({
       hideReplyBtn: false,
     }
   },
-  gotToProfile(e){
+  goToProfile(e){
     e.preventDefault()
     this.context.router.push(`/${this.props.duck.uid}`)
   },
-  handleClick(){
+  handleClick(e){
     e.preventDefault()
     this.context.router.push(`/duckDetail/${this.props.duck.duckId}`)
   },
@@ -53,4 +53,8 @@ function mapStateToProps({ ducks, likeCount, usersLikes }, props){
   }
 }
 
-export default connect(mapStateToProps)(DuckContainer)
+function mapDispatchToProps(dispatch){
+  return bindActionCreators(usersLikesActions,dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DuckContainer)

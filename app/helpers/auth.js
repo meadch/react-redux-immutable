@@ -8,6 +8,7 @@ export default function auth (){
 
 export function checkIfAuthed(store){
   const authData = ref.getAuth()
+  console.log(authData)
   if (authData === null){
     return false;
   } else if (store.getState().users.isAuthed === false) {
@@ -15,9 +16,8 @@ export function checkIfAuthed(store){
     const userInfo = formatUserInfo(facebook.displayName, facebook.profileImageURL, uid)
     store.dispatch(authUser(uid))
     store.dispatch(fetchingUserSuccess(uid, userInfo, Date.now()))
-  } else {
-    return true;
   }
+  return true
 }
 
 export function logout(){

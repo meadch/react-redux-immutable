@@ -15,8 +15,11 @@ const store = createStore( combineReducers(reducers),
                               )
 
 function checkAuth(nextState, replace){
-  const isAuthed = checkIfAuthed(store),
-        nextPathName = nextState.location.pathname
+  console.log("RUNNING")
+  const isAuthed = checkIfAuthed(store)
+  const nextPathName = nextState.location.pathname
+
+  console.log(isAuthed, nextPathName)
   if (nextPathName === '/' ||  nextPathName === '/auth'){
     if(isAuthed === true){
       replace('/feed')
