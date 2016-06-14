@@ -6,6 +6,7 @@ import { DuckDetails } from 'components'
 import * as duckActionCreators from 'redux/modules/ducks'
 import * as likeCountActionCreators from 'redux/modules/likeCount'
 const { func, object, string, bool } = PropTypes
+import * as repliesActionCreators from 'redux/modules/replies'
 
 const DuckDetailsContainer = React.createClass({
   propTypes: {
@@ -29,6 +30,7 @@ const DuckDetailsContainer = React.createClass({
   render () {
     return (
       <DuckDetails
+        addAndHandleReply= { this.props.addAndHandleReply }
         authedUser={this.props.authedUser}
         duckId={this.props.duckId}
         error={this.props.error}
@@ -50,7 +52,8 @@ function mapStateToProps ({ducks, likeCount, users}, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     ...duckActionCreators,
-    ...likeCountActionCreators
+    ...likeCountActionCreators,
+    ...repliesActionCreators,
   }, dispatch)
 }
 
