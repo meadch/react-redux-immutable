@@ -9,7 +9,6 @@ import * as reducers from 'redux/modules'
 import {routerReducer, syncHistoryWithStore} from 'react-router-redux'
 import {hashHistory} from 'react-router'
 
-
 const store = createStore( combineReducers({...reducers, routing: routerReducer }),
                             compose(
                                   applyMiddleware(thunk),
