@@ -31,7 +31,7 @@ function Modal(props){
   }
   return (
     <span className={darkBtn} onClick={props.openModal}>
-      {'Add Algo'}
+      {'Add Tweet/Duck'}
       <ReactModal style={modalStyles} isOpen={props.isOpen} onRequestClose={props.closeModal}>
         <div className={newDuckTop}>
           <span>{'Add new duck...'}</span>
