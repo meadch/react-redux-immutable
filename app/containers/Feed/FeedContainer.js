@@ -3,11 +3,13 @@ import {connect} from 'react-redux'
 import {Feed} from 'components'
 import * as feedActionCreators from 'redux/modules/feed'
 import {bindActionCreators} from 'redux'
+import {List} from 'immutable'
 
 
 const { bool, string, func } = PropTypes
 const FeedContainer = React.createClass({
   propTypes: {
+    duckIds: PropTypes.instanceOf(List),
     newDucksAvailable: bool.isRequired,
     error: string.isRequired,
     isFetching: bool.isRequired,
@@ -33,12 +35,11 @@ const FeedContainer = React.createClass({
 });
 
 function mapStateToProps({feed}){
-  const { newDucksAvailable, error, isFetching, duckIds } = feed
   return {
-    newDucksAvailable,
-    error,
-    isFetching,
-    duckIds,
+    newDucksAvailable: feed.get('newDucksAvailable'),
+    error: feed.get('error'),
+    isFetching: feed.get('isFetching'),
+    duckIds: feed.get('duckIds')
   }
 }
 
