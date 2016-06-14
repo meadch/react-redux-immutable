@@ -31,7 +31,6 @@ Replies.propTypes = {
 
 function Replies ({replies, error, isFetching}) {
   const replyIds = Object.keys(replies)
-  console.log(replyIds)
   return (
     <div>
       {error ? <h3 className={errorMsg}>{error}</h3> : null}
